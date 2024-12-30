@@ -14,6 +14,7 @@ class Employe extends Model
       'emp_email',
       'date',
       'reason',
+      'approval_token',
       'status',
     ];
 }

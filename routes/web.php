@@ -29,6 +29,9 @@ Route::get('/leave-requests/get', [EmployeesController::class, 'getLeaveRequests
 // Route::get('/leave-requests/approve/{id}', [EmployeesController::class, 'approve'])->name('leave_approve');
 
 
+Route::post('/leave/store', [EmployeesController::class, 'store'])->name('leave.store');
+Route::get('/leave-approve/{id}/{token}', [EmployeesController::class, 'approveByEmail'])->name('leave_approve_email');
+Route::get('/leave-reject/{id}/{token}', [EmployeesController::class, 'rejectByEmail'])->name('leave_reject_email');
 
 
 

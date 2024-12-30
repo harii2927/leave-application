@@ -3,11 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Employe;
 
 class LeaveRejectMail extends Mailable
 {
@@ -15,14 +13,30 @@ class LeaveRejectMail extends Mailable
 
     public $leaveRequest;
 
-    public function __construct($leaveRequest)
+    /**
+     * Create a new message instance.
+     *
+     * @param Employe $leaveRequest
+     */
+    public function __construct(Employe $leaveRequest)
     {
         $this->leaveRequest = $leaveRequest;
     }
 
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
     public function build()
     {
-        return $this->view('emails.leave_rejection')
-                    ->with(['leaveRequest' => $this->leaveRequest]);
+        return $this->subject('Leave Request Rejected')
+                    ->view('emails.leave_rejection')
+                    ->with([
+                        'name' => $this->leaveRequest->name,
+                        'emp_id' => $this->leaveRequest->emp_id,
+                        'date' => $this->leaveRequest->date,
+                        'reason' => $this->leaveRequest->reason,
+                    ]);
     }
 }
